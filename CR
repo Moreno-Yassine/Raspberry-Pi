@@ -1,0 +1,65 @@
+
+FONCTION DIVIDE :
+000080d0 <divide>:
+    80d0:	e24dd010 	sub	sp, sp, #16
+    80d4:	e58d0004 	str	r0, [sp, #4]
+    80d8:	e58d1000 	str	r1, [sp]
+    80dc:	e3a03000 	mov	r3, #0
+    80e0:	e58d300c 	str	r3, [sp, #12]
+    80e4:	e59d3004 	ldr	r3, [sp, #4]
+    80e8:	e58d3008 	str	r3, [sp, #8]
+    80ec:	ea000006 	b	810c <divide+0x3c>
+    80f0:	e59d300c 	ldr	r3, [sp, #12]
+    80f4:	e2833001 	add	r3, r3, #1
+    80f8:	e58d300c 	str	r3, [sp, #12]
+    80fc:	e59d2008 	ldr	r2, [sp, #8]
+    8100:	e59d3000 	ldr	r3, [sp]
+    8104:	e0633002 	rsb	r3, r3, r2
+    8108:	e58d3008 	str	r3, [sp, #8]
+    810c:	e59d2008 	ldr	r2, [sp, #8]
+    8110:	e59d3000 	ldr	r3, [sp]
+    8114:	e1520003 	cmp	r2, r3
+    8118:	aafffff4 	bge	80f0 <divide+0x20>
+    811c:	e59d300c 	ldr	r3, [sp, #12]
+    8120:	e1a00003 	mov	r0, r3
+    8124:	e28dd010 	add	sp, sp, #16
+    8128:	e12fff1e 	bx	lr
+    
+FONCTION COMPUTE VOLUME :
+0000812c <compute_volume>:
+    812c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+    8130:	e24dd014 	sub	sp, sp, #20
+    8134:	e58d0004 	str	r0, [sp, #4]
+    8138:	e59d3004 	ldr	r3, [sp, #4]
+    813c:	e59d2004 	ldr	r2, [sp, #4]
+    8140:	e0030392 	mul	r3, r2, r3
+    8144:	e59d2004 	ldr	r2, [sp, #4]
+    8148:	e0030392 	mul	r3, r2, r3
+    814c:	e58d300c 	str	r3, [sp, #12]
+    8150:	e59d300c 	ldr	r3, [sp, #12]
+    8154:	e59f201c 	ldr	r2, [pc, #28]	; 8178 <compute_volume+0x4c>
+    8158:	e0030392 	mul	r3, r2, r3
+    815c:	e1a00003 	mov	r0, r3
+    8160:	e59f1014 	ldr	r1, [pc, #20]	; 817c <compute_volume+0x50>
+    8164:	ebffffd9 	bl	80d0 <divide>
+    8168:	e1a03000 	mov	r3, r0
+    816c:	e1a00003 	mov	r0, r3
+    8170:	e28dd014 	add	sp, sp, #20
+    8174:	e8bd8000 	pop	{pc}
+    8178:	0000058c 	andeq	r0, r0, ip, lsl #11
+    817c:	00000153 	andeq	r0, r0, r3, asr r1 
+    
+FONCTION KMAIN
+00008180 <kmain>:
+    8180:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+    8184:	e24dd00c 	sub	sp, sp, #12
+    8188:	e3a03005 	mov	r3, #5
+    818c:	e58d3004 	str	r3, [sp, #4]
+    8190:	e59d0004 	ldr	r0, [sp, #4]
+    8194:	ebffffe4 	bl	812c <compute_volume>
+    8198:	e58d0000 	str	r0, [sp]
+    819c:	e59d3000 	ldr	r3, [sp]
+    81a0:	e1a00003 	mov	r0, r3
+    81a4:	e28dd00c 	add	sp, sp, #12
+    81a8:	e8bd8000 	pop	{pc}
+    
