@@ -11,6 +11,7 @@ void __attribute__ ((naked)) switch_to(struct ctx_s* ctx)
 {
 	
 	// SAUVEGARGE
+	__asm("push {r0-r12}");
 	__asm("mov %0, sp" : "=r"((*current_ctx).sp));
 	__asm("mov %0, lr" : "=r"((*current_ctx).adresse));
 
@@ -20,6 +21,7 @@ void __attribute__ ((naked)) switch_to(struct ctx_s* ctx)
 	//RSTR
 	__asm("mov sp, %0" : : "r"((*ctx).sp));
 	__asm("mov lr, %0" : : "r"((*ctx).adresse));
+	__asm("pop {r0-r12}");
 
 	//EXEC
 	__asm("bx lr");
