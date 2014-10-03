@@ -1,26 +1,22 @@
-#include"sched.h"
-struct
-ctx_s ctx_ping;
-struct
-ctx_s ctx_pong;
-struct
-ctx_s ctx_init;
-void
-ping()
+#include "sched.h"
+#define STACK_SIZE 1024
+
+struct ctx_s ctx_ping;
+struct ctx_s ctx_pong;
+struct ctx_s ctx_init;
+void ping()
 {
 while( 1 ) {switch_to(&ctx_pong);}
 }
 
-void
-pong()
+void pong()
 {
 while( 1 ) {switch_to(&ctx_ping);}
 }
 
 //------------------------------------------------------------------------
 
-int
-kmain (void)
+int kmain (void)
 {
 init_hw();
 init_ctx(&ctx_ping, ping, STACK_SIZE);

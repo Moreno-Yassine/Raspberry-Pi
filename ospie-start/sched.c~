@@ -2,7 +2,7 @@
 
 void init_ctx(struct ctx_s* ctx, func_t f, unsigned int stack_size)
 {
-	(*ctx).sp = (int)phyAlloc_alloc(stack_size)+stack_size-4;
+	(*ctx).sp = (int)phyAlloc_alloc(stack_size);
 	// ADRESSE DE LA FONCTION
 	(*ctx).adresse = f;
 }

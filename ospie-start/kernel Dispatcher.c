@@ -1,5 +1,5 @@
 #include "sched.h"
-#define STACK_SIZE 16
+#define STACK_SIZE 4
 
 struct ctx_s ctx_ping;
 struct ctx_s ctx_pong;
